@@ -23,6 +23,9 @@ def home():
 @app.post("/predict")
 def predict_profit(input: ProfitPredictionInput):
     state_encoded = encoder.transform([[input.state]])
-    finput = np.concatenate((state_encoded, [[input.rdSpend, input.admSpend, input.marketingSpend]]), axis=1)
+    finput = np.concatenate(
+        (state_encoded, [[input.rd_spend, input.admin_spend, input.marketing_spend]]), 
+        axis=1
+    )
     profit = model.predict(finput)
     return {"predicted_profit": float(profit[0])}
